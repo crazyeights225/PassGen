@@ -14,9 +14,36 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		 <selenium.version>3.14.0</selenium.version>
+  		 <serenity.version>1.9.45</serenity.version>
+         <serenity.jbehave.version>1.45.0</serenity.jbehave.version>
+         <mvn.surefire.version>2.22.1</mvn.surefire.version>
+         <mvn.failsafe.version>2.22.1</mvn.failsafe.version>
+         <mvn.compiler.version>3.8.0</mvn.compiler.version>
+         <mvn.build.helper.version>3.0.0</mvn.build.helper.version>
 	</properties>
 
-	<dependencies>
+<dependencies>
+<dependency>
+<groupId>net.serenity-bdd</groupId>
+<artifactId>serenity-core</artifactId>
+<version>${serenity.version}</version>
+</dependency>
+<dependency>
+<groupId>net.serenity-bdd</groupId>
+<artifactId>serenity-junit</artifactId>
+<version>${serenity.version}</version>
+</dependency> 
+<dependency>
+<groupId>net.serenity-bdd</groupId>
+<artifactId>serenity-rest-assured</artifactId>
+<version>${serenity.version}</version>
+</dependency>
+<dependency>
+<groupId>net.serenity-bdd</groupId>
+<artifactId>serenity-jbehave</artifactId>
+<version>${serenity.jbehave.version}</version>
+</dependency>
 	<dependency>
     <groupId>org.json</groupId>
     <artifactId>json</artifactId>
@@ -72,10 +99,6 @@
 			<version>4.0.5</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.github.jknack</groupId>
 			<artifactId>handlebars-guava-cache</artifactId>
 			<version>4.0.5</version>
@@ -87,12 +110,101 @@
 			<!-- <version>4.0.1</version> <scope>provided</scope> -->
 		</dependency>
 	</dependencies>
-	<build>
+<build>
+ <testResources>
+ <testResource>
+ <directory>src/test/resources</directory>
+ <includes>
+ <include>**/*.story</include>
+<include>**/*.data</include>
+ </includes>
+ </testResource>
+ </testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-		</plugins>
+ <plugin>
+ <groupId>org.apache.maven.plugins</groupId>
+ <artifactId>maven-surefire-plugin</artifactId>
+ <configuration>
+ 	<skip>true</skip>
+ 	<useSystemClassLoader>false</useSystemClassLoader>
+ </configuration>
+ </plugin>
+ <plugin>
+ <artifactId>maven-failsafe-plugin</artifactId>
+ <version>${mvn.failsafe.version}</version><!--$NO-MVN-MAN-VER$-->
+<configuration>
+<includes>
+	<include>**/*Test.java</include>
+	<include>**/*TestSuite.java</include>
+	<include>**/Test*.java</include>
+	<include>**/When*.java</include>
+</includes>
+<argline>-Xmx1024m -XX:MaxPermSize=256m</argline>
+<systemPropertyVariables>
+	<webdirver.driver>${webdriver.driver}</webdirver.driver>
+</systemPropertyVariables>
+<parallel>classes</parallel>
+<perCoreThreadCount>true</perCoreThreadCount>
+<threadCount>1</threadCount>
+<forkCount>1</forkCount>
+<reuseForks>true</reuseForks>
+<testFailureIgnore>true</testFailureIgnore>
+</configuration>
+ <executions>
+ <execution>
+ <phase>integration-test</phase>
+ <goals>
+ <goal>integration-test</goal>
+ <goal>verify</goal>
+ </goals>
+ </execution>
+ </executions>
+  </plugin>
+  <plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <configuration>
+  <source>1.8</source>
+  <target>1.8</target>
+  </configuration>
+  </plugin>
+  <plugin>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>build-helper-maven-plugin</artifactId>
+  <!--<executions>
+  <execution>
+  <id>current-time</id>
+  <phase>validate</phase>
+  <goals>
+  	<goal>timestamp-property</goal>
+  </goals>
+  <configuration>
+  	<name>current.time</name>
+  	<pattern>dd-MM-yyyy_HH-mm-ss</pattern>
+  	<timeZone>EST</timeZone>
+  </configuration>
+  </execution>
+  </executions>
+  -->
+  </plugin>
+  <plugin>
+  <groupId>net.serenity-bdd.maven.plugins</groupId>
+  <artifactId>serenity-maven-plugin</artifactId>
+  <version>${serenity.version}</version>
+  <executions>
+  <execution>
+  	<id>serenity-reports</id>
+  	<phase>post-integration-test</phase>
+  	<goals>
+  		<goal>aggregate</goal>
+  	</goals>
+  </execution>
+  </executions>
+  </plugin>
+ </plugins>
 	</build>
 </project>
