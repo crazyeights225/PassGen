@@ -3,7 +3,7 @@
 
 Running Server: spring-boot:run
 
-Running Automated Tests: clean verify
+Running Automated Tests (the server has to be running already): clean verify
 
 Running JUnit Tests: Right click project, click run JUnit tests
 
