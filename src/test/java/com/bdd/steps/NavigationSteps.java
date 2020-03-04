@@ -18,4 +18,32 @@ public class NavigationSteps extends ScenarioSteps{
 	public void check_page() {
 		page.checkForUserAgentAndPassword();
 	}
+	
+	@Step 
+	public void enter_correct_passcode() {
+		page.enterCorrectPasscode();
+	}
+	
+	@Step
+	public void enter_incorrect_passcode() {
+		page.enterIncorrectPasscode();
+	}
+	
+	@Step
+	public void click_submit() {
+		page.clickSubmitButton();
+	}
+	
+	@Step
+	public String checkStatus() {
+		return page.checkStatus();
+	
+	}
+	
+	@Step
+	public void driver_close() {
+		page.close_driver();
+	}
 }
+	
+

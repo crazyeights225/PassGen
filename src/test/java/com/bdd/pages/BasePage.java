@@ -17,4 +17,7 @@ public class BasePage extends PageObject{
 		getDriver().manage().window().maximize();
 	}
 	
+	public void closeDriver() {
+		getDriver().close();
+	}
 }

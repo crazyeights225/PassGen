@@ -2,5 +2,13 @@
 <body>
 <h2 id="useragent">User Agent: {{user_agent}}</h2>
 <h2 id="password">Password: {{password}}</h2>
+<h4>Verify Passcode</h4>
+<form action="/verify" method="post">
+<label for="useragent">User Agent:</label>
+<input type="text" id="useragent" name="useragent" value="{{user_agent}}">
+<label for="passcode">Password:</label>
+<input type="text" id="passcode" name="passcode">
+<input type="submit" value="Submit">
+</form>
 </body>
 </html>
