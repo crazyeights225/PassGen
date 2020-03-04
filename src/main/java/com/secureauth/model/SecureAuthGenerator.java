@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import com.secureauth.utilities.LoggerTrace;
 
 public class SecureAuthGenerator {
-	private Map user_agents = new HashMap<String, String>();
+	private Map<String, String> user_agents = new HashMap<String, String>();
 	private Logger logger=LoggerTrace.getInstance().getLogger("file");
 	
 	public SecureAuthGenerator() {
@@ -21,6 +21,7 @@ public class SecureAuthGenerator {
 	public String getIndexJson() {
 		String ua=generateUserAgent();
 		String passcode=getPasscode();
+		user_agents.put(ua, passcode);
 		return String.format("{\"user_agent\": \"%s\", \"password\": \"%s\"}", ua, passcode);
 	}
 	
@@ -35,6 +36,6 @@ public class SecureAuthGenerator {
 	}
 	
 	public boolean verifyCode(String ua, String code) {
-		return true;
+		return (code.equals(user_agents.get(ua)));
 	}
 }
