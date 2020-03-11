@@ -1,5 +1,7 @@
 # SecureAuth
-3008 P2
+Basic Demo of Spring with Unit and Acceptance Testing
+
+Spring API, with Selenium/Serenity, log4j, and junits
 
 Running Server: spring-boot:run
 
